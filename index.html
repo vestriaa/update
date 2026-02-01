@@ -1,0 +1,38 @@
+<div id="t">
+<script>
+setInterval(_ => {
+  const now = new Date();
+  let m = now.getUTCMonth();
+  let y = now.getUTCFullYear();
+  let target;
+
+  // get first thursday of month
+  for (; ; m++) {
+    target = new Date(Date.UTC(y, m, 1, 15));
+    while (target.getUTCDay() !== 4) target.setUTCDate(target.getUTCDate() + 1);
+    if (target > now) break; 
+  }
+
+  const s = Math.floor((target - now) / 1000);
+
+  // suffix
+  const d = target.getUTCDate();
+  const j = d % 10, k = d % 100;
+  const opt = (j == 1 && k != 11) ? "st" : (j == 2 && k != 12) ? "nd" : (j == 3 && k != 13) ? "rd" : "th";
+
+  const monthName = target.toLocaleDateString('en-US', { month: 'long' });
+  const dateHeader = `${monthName} ${d}${opt}, ${target.getUTCFullYear()}`;
+
+  let units = [
+    [s / 604800, 'weeks'],
+    [s / 86400 % 7, 'days'],
+    [s / 3600 % 24, 'hours'],
+    [s / 60 % 60, 'minutes'],
+    [s % 60, 'seconds']
+  ];
+
+  while (units.length > 1 && Math.floor(units[0][0]) === 0) units.shift();
+
+  const timerString = units.map(v => Math.floor(v[0]) + ' ' + v[1]).join(' ');
+  t.innerHTML = `${dateHeader}<br>${timerString}`;
+}, 1000)</script>
