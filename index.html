@@ -63,5 +63,5 @@ setInterval(_ => {
   while (units.length > 1 && Math.floor(units[0][0]) === 0) units.shift();
 
   const timerString = units.map(v => Math.floor(v[0]) + ' ' + v[1]).join(' ');
-  t.innerHTML = `${dateHeader}<br>${timerString}`;
+  t.innerHTML = `<div>${dateHeader}</div><div style="opacity: 0.8; font-size: 0.7em;">${timerString}</div>`;
 }, 1000)</script>
