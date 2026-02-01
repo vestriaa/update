@@ -1,5 +1,15 @@
 <div id="t">
 <script>
+  const style = document.createElement('style');
+  style.innerHTML = `
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@750&display=swap');
+    #t { 
+      font-family: 'Nunito', sans-serif; 
+      font-weight: 750; 
+    }
+  `;
+  document.head.appendChild(style);
+  
 setInterval(_ => {
   const now = new Date();
   let m = now.getUTCMonth();
