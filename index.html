@@ -35,9 +35,9 @@ setInterval(_ => {
   let y = now.getUTCFullYear();
   let target;
 
-  // get first thursday of month
+  // get first thursday of month at 15:00 UTC
   for (; ; m++) {
-    target = new Date(Date.UTC(y, m, 1, 15));
+    target = new Date(Date.UTC(y, m, 1, 15, 0, 0));
     while (target.getUTCDay() !== 4) target.setUTCDate(target.getUTCDate() + 1);
     if (target > now) break; 
   }
@@ -47,10 +47,18 @@ setInterval(_ => {
   // suffix
   const d = target.getUTCDate();
   const j = d % 10, k = d % 100;
-  const opt = (j == 1 && k != 11) ? "st" : (j == 2 && k != 12) ? "nd" : (j == 3 && k != 13) ? "rd" : "th";
+  const opt = (j == 1 && k != 11) ? "st" : 
+              (j == 2 && k != 12) ? "nd" : 
+              (j == 3 && k != 13) ? "rd" : "th";
 
   const monthName = target.toLocaleDateString('en-US', { month: 'long' });
-  const dateHeader = `${monthName} ${d}${opt}, ${target.getUTCFullYear()}`;
+
+  // zero-pad time
+  const hours = String(target.getUTCHours()).padStart(2, '0');
+  const minutes = String(target.getUTCMinutes()).padStart(2, '0');
+  const seconds = String(target.getUTCSeconds()).padStart(2, '0');
+
+  const dateHeader = `${monthName} ${d}${opt}, ${target.getUTCFullYear()} ${hours}:${minutes}:${seconds}`;
 
   let units = [
     [s / 604800, 'weeks'],
@@ -63,5 +71,10 @@ setInterval(_ => {
   while (units.length > 1 && Math.floor(units[0][0]) === 0) units.shift();
 
   const timerString = units.map(v => Math.floor(v[0]) + ' ' + v[1]).join(' ');
-  t.innerHTML = `<div>${dateHeader}</div><div style="opacity: 0.8; font-size: 0.7em;">${timerString}</div>`;
-}, 1000)</script>
+
+  t.innerHTML = `
+    <div>${dateHeader}</div>
+    <div style="opacity: 0.8; font-size: 0.7em;">${timerString}</div>
+  `;
+}, 1000)
+</script>
