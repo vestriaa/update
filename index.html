@@ -56,9 +56,8 @@ setInterval(_ => {
   // zero-pad time
   const hours = String(target.getUTCHours()).padStart(2, '0');
   const minutes = String(target.getUTCMinutes()).padStart(2, '0');
-  const seconds = String(target.getUTCSeconds()).padStart(2, '0');
 
-  const dateHeader = `${monthName} ${d}${opt}, ${target.getUTCFullYear()} ${hours}:${minutes}:${seconds}`;
+  const dateHeader = `${monthName} ${d}${opt}, ${target.getUTCFullYear()} ${hours}:${minutes}`;
 
   let units = [
     [s / 604800, 'weeks'],
