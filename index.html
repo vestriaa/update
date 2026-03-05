@@ -37,7 +37,7 @@ setInterval(_ => {
 
   // get first thursday of month at 15:00 UTC
   for (; ; m++) {
-    target = new Date(Date.UTC(y, m, 1, 15, 0, 0));
+    target = new Date(Date.UTC(y, m, 1, 15, 0));
     while (target.getUTCDay() !== 4) target.setUTCDate(target.getUTCDate() + 1);
     if (target > now) break; 
   }
